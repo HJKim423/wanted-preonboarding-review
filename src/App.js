@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider, useTheme, useThemeChange } from './context/ThemeContext';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <Title />
+      <ToggleButton />
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+const Title = () => {
+  const theme = useTheme();
+
+  const style = {
+    color: theme?.isDarkMode() ? 'white' : 'black',
+    backgroundColor: theme?.isDarkMode() ? 'black' : 'white',
+  };
+  return <h1 style={style}>Hello World</h1>;
+};
+
+const ToggleButton = () => {
+  const toggleTheme = useThemeChange();
+  return <button onClick={toggleTheme}>change theme</button>;
+};
