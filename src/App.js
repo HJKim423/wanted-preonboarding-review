@@ -11,7 +11,9 @@ function App() {
 
 export default App;
 
+//컴포넌트들
 const Title = () => {
+  //custom hook
   const theme = useTheme();
 
   const style = {
