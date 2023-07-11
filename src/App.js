@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ThemeProvider, useTheme, useThemeChange } from './context/ThemeContext';
+import { httpClient } from './api/httpClient';
 
 function App() {
   return (
@@ -7,6 +8,8 @@ function App() {
       <Title />
       <ToggleButton />
       <CustomHookExample />
+      <br />
+      <HttpExample />
     </ThemeProvider>
   );
 }
@@ -32,7 +35,7 @@ const ToggleButton = () => {
 
 const CustomHookExample = () => {
   const [isLightMode, changeMode] = useToggle(false);
-  console.log(isLightMode);
+
   return (
     <>
       <h1
@@ -57,4 +60,13 @@ const useToggle = defaultValue => {
   };
 
   return [toggle, changeToggle];
+};
+
+//횡단관심사 - httpclient
+
+const HttpExample = () => {
+  const request = () => {
+    httpClient.fetch('todos');
+  };
+  return <button onClick={request}>request</button>;
 };
