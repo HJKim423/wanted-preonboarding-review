@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ThemeProvider, useTheme, useThemeChange } from './context/ThemeContext';
 
 function App() {
@@ -5,6 +6,7 @@ function App() {
     <ThemeProvider>
       <Title />
       <ToggleButton />
+      <CustomHookExample />
     </ThemeProvider>
   );
 }
@@ -26,4 +28,33 @@ const Title = () => {
 const ToggleButton = () => {
   const toggleTheme = useThemeChange();
   return <button onClick={toggleTheme}>change theme</button>;
+};
+
+const CustomHookExample = () => {
+  const [isLightMode, changeMode] = useToggle(false);
+  console.log(isLightMode);
+  return (
+    <>
+      <h1
+        style={{
+          backgroundColor: isLightMode ? 'white' : 'black',
+          color: isLightMode ? 'black' : 'white',
+        }}
+      >
+        CustomHook - current mode: {isLightMode ? 'Light Mode' : 'Dark Mode'}
+      </h1>
+      <button onClick={changeMode}>change mode</button>
+    </>
+  );
+};
+
+//custom Hook
+const useToggle = defaultValue => {
+  const [toggle, setToggle] = useState(defaultValue);
+
+  const changeToggle = () => {
+    setToggle(prev => !prev);
+  };
+
+  return [toggle, changeToggle];
 };
