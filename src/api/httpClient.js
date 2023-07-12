@@ -1,19 +1,24 @@
-class HttpClient {
+//HttpClientInterface
+//fetch(endPoint, options): Promise<Response>
+
+export class HttpClient {
   #baseURL;
-  constructor() {
-    this.#baseURL = 'https://jsonplaceholder.typicode.com/';
+  #tokenRepository;
+
+  constructor(baseURL, tokenRepository) {
+    this.#baseURL = baseURL;
+    this.#tokenRepository = tokenRepository;
   }
 
   fetch(endPoint, options = {}) {
     const optionWithAuth = {
       ...options,
       headers: {
+        'Content-Type': 'application/json',
         ...options.headers,
-        Authorization: 'ATT',
+        Authorization: this.#tokenRepository.get(),
       },
     };
     return window.fetch(this.baseURL + endPoint, optionWithAuth);
   }
 }
-
-export const httpClient = new HttpClient();

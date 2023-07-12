@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ThemeProvider, useTheme, useThemeChange } from './context/ThemeContext';
-import { httpClient } from './api/httpClient';
+import { HttpClient } from './api/httpClient';
+import Auth from './Components/Auth';
+import Todos from './Components/Todos';
 
 function App() {
   return (
@@ -10,6 +12,9 @@ function App() {
       <CustomHookExample />
       <br />
       <HttpExample />
+      <br />
+      <Auth />
+      <Todos />
     </ThemeProvider>
   );
 }
@@ -66,7 +71,7 @@ const useToggle = defaultValue => {
 
 const HttpExample = () => {
   const request = () => {
-    httpClient.fetch('todos');
+    HttpClient.fetch('todos');
   };
   return <button onClick={request}>request</button>;
 };
