@@ -7,6 +7,8 @@ import { TodoProvider } from './context/TodoContext';
 import { AuthService } from './services/AuthService';
 import { LocalTokenRepository } from './services/LocalToken';
 import { TodoService } from './services/TodoService';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -22,9 +24,11 @@ const authService = new AuthService(httpClient, tokenRepository);
 const todoService = new TodoService(httpClient);
 
 root.render(
-  <AuthProvider authService={authService}>
-    <TodoProvider todoService={todoService}>
-      <App />
-    </TodoProvider>
-  </AuthProvider>,
+  <Provider store={store}>
+    <AuthProvider authService={authService}>
+      <TodoProvider todoService={todoService}>
+        <App />
+      </TodoProvider>
+    </AuthProvider>
+  </Provider>,
 );

@@ -3,18 +3,24 @@ import { ThemeProvider, useTheme, useThemeChange } from './context/ThemeContext'
 import { HttpClient } from './api/httpClient';
 import Auth from './Components/Auth';
 import Todos from './Components/Todos';
+import { useSelector, useDispatch } from 'react-redux';
+import { increaseCounter } from './store/counter';
 
 function App() {
   return (
     <ThemeProvider>
       <Title />
       <ToggleButton />
+      <br />
       <CustomHookExample />
       <br />
       <HttpExample />
       <br />
       <Auth />
+      <br />
       <Todos />
+      <br />
+      <Increase />
     </ThemeProvider>
   );
 }
@@ -74,4 +80,22 @@ const HttpExample = () => {
     HttpClient.fetch('todos');
   };
   return <button onClick={request}>request</button>;
+};
+
+//3-1 Redux
+const Increase = () => {
+  const count = useSelector(store => store.count);
+  const dispatch = useDispatch();
+
+  function increase() {
+    //dispatch
+    dispatch(increaseCounter());
+  }
+
+  return (
+    <div>
+      <h1>count: {count}</h1>
+      <button onClick={increase}>increase</button>
+    </div>
+  );
 };
